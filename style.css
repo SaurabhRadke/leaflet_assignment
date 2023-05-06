@@ -1,0 +1,19 @@
+.Conatiner{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#map{
+    width: 100%;
+    height: 100vh;
+}
+.Conatiner h2{
+    font-size: 30px;
+}
+.Conatiner #map{
+    border: 2px solid black;
+    height: 100%;
+    width: 100%;
+}

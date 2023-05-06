@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee details</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./dist/MarkerCluster.css">
+    <link rel="stylesheet" href="./dist/MarkerCluster.Default.css">
+</head>
+<body>
+    <div class="Conatiner">
+        <h2>Welcome to Employee Database</h2>
+        <div id="map"></div>
+    </div>
+    
+    <script src="./data.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <script src="./dist/leaflet.markercluster.js"></script>
+    <script>
+        var map = L.map('map').setView([19.7515, 75.7139], 6);
+
+        var src=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        const geoMarkerStyle={
+            radius:7,
+            fillColor:"#ff8900",
+            color:"#000",
+            weight:1,
+            opacity:1,
+            fillOpacity:0.8,
+        };
+        const markers = L.markerClusterGroup();
+        
+        L.geoJSON(EmployeLocation,{
+            
+            pointToLayer: function (feature, latlng){
+                const popupContent=
+                    '<h4 class="text-primary"> Employee Details </h4>'+'<table><tr><th>Name : </th><td>'+feature.properties.Name+'</td></tr><tr><th>Department: </th><td>'+feature.properties.Department+'</td></tr><tr><th>Addres : </th><td>'+feature.properties.Addres+'</td></tr></table>';
+                return markers.addLayer(L.circleMarker(latlng,geoMarkerStyle).bindPopup(popupContent))
+            }
+            
+        });
+        map.addLayer(markers);
+    </script>
+</body>
+</html>
